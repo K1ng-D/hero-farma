@@ -15,6 +15,7 @@ interface Obat {
   efekSamping: string;
   bentukObat: string;
   harga: string;
+  deskripsiObat: string;
 }
 
 export default function EventTable() {
@@ -41,13 +42,13 @@ export default function EventTable() {
   };
 
   return (
-    <div className="p-6 bg-slate-100 h-screen md:ml-[300px]">
+    <div className="p-6 bg-gray-50 h-screen md:ml-[300px] ">
       <button
         onClick={() => {
           setSelectedObat(undefined);
           setIsOpen(true);
         }}
-        className="mb-4 bg-[#374785] text-white px-4 py-2 rounded"
+        className="mb-6 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[#2c3e70] transition-all duration-200"
       >
         Tambah Obat
       </button>
@@ -61,56 +62,63 @@ export default function EventTable() {
           }}
         />
       )}
-      <table className="w-full border-collapse border">
-        <thead>
-          <tr className="bg-[#374785] text-black">
-            <th className="border p-2">Nama Obat</th>
-            <th className="border p-2">Kategori</th>
-            <th className="border p-2">Indikasi</th>
-            <th className="border p-2">Efek Samping</th>
-            <th className="border p-2">Bentuk</th>
-            <th className="border p-2">Harga</th>
-            <th className="border p-2">Gambar</th>
-            <th className="border p-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {obats.map((obat) => (
-            <tr className="bg-white text-black" key={obat.id}>
-              <td className="border p-2 text-center">{obat.namaObat}</td>
-              <td className="border p-2 text-center">{obat.kategoriObat}</td>
-              <td className="border p-2 text-center">{obat.indikasiObat}</td>
-              <td className="border p-2 text-center">{obat.efekSamping}</td>
-              <td className="border p-2 text-center">{obat.bentukObat}</td>
-              <td className="border p-2 text-center">{obat.harga}</td>
-              <td className="border p-2 flex items-center justify-center text-center">
-                <img
-                  src={obat.imageUrl}
-                  alt={obat.namaObat}
-                  className="h-12 "
-                />
-              </td>
-              <td className="border p-2 items-center justify-center text-center">
-                <button
-                  onClick={() => {
-                    setSelectedObat(obat);
-                    setIsOpen(true);
-                  }}
-                  className="bg-yellow-500 text-white px-2 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(obat.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded ml-2"
-                >
-                  Hapus
-                </button>
-              </td>
+
+      <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-blue-500 text-white">
+              <th className="p-4">Nama Obat</th>
+              <th className="p-4">Kategori</th>
+              <th className="p-4">Indikasi</th>
+              <th className="p-4">Efek Samping</th>
+              <th className="p-4">Bentuk</th>
+              <th className="p-4">Deskripsi</th>
+              <th className="p-4">Harga</th>
+              <th className="p-4">Gambar</th>
+              <th className="p-4">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {obats.map((obat) => (
+              <tr key={obat.id} className="hover:bg-gray-100 border-t">
+                <td className="p-4 text-center">{obat.namaObat}</td>
+                <td className="p-4 text-center">{obat.kategoriObat}</td>
+                <td className="p-4 text-center">{obat.indikasiObat}</td>
+                <td className="p-4 text-center">{obat.efekSamping}</td>
+                <td className="p-4 text-center">{obat.bentukObat}</td>
+                <td className="p-4 text-center">
+                  {obat.deskripsiObat.substring(0, 20)}...
+                </td>
+                <td className="p-4 text-center">{obat.harga}</td>
+                <td className="p-4 text-center">
+                  <img
+                    src={obat.imageUrl}
+                    alt={obat.namaObat}
+                    className="h-12 mx-auto"
+                  />
+                </td>
+                <td className="p-4 text-center">
+                  <button
+                    onClick={() => {
+                      setSelectedObat(obat);
+                      setIsOpen(true);
+                    }}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-yellow-400"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(obat.id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-400"
+                  >
+                    Hapus
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
